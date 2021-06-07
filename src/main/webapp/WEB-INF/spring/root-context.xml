@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!-- Root Context: defines shared resources visible to all other web components -->
+    <bean id = "dbcpDataSource"
+          class="org.apache.commons.dbcp2.BasicDataSource"
+          p:driverClassName="org.mariadb.jdbc.Driver"
+          p:url="jdbc:mariadb://bigdata.cnuqv3vtwjri.ap-northeast-2.rds.amazonaws.com:3306/playground"
+          p:username="playground"
+          p:password="bigdata2020"
+          p:initialSize="10" p:maxTotal="7"
+          p:maxIdle="3"  />
+
+    <!--  myBatis 설정 #1 -->
+    <!--  SQL mapping framework -->
+    <!-- 프로그램에서 사용하는 SQL질의문들을 하나의 구성파일에 작성한 후 -->
+    <!-- 간단한 이름으로 호출해서 사용하는 라이브러리 (매핑) -->
+    <!-- 프로그램 코드와 SQL질의문의 분리로 간결성과 유지보수성 향상 -->
+    <!-- jdbcTemplate의 mapper 없이도 간단히 List로 구성하여 출력가능 -->
+    <!-- 관련 라이브러리 : mybatis, mybatis-spring   -->
+    <!-- blog.mybatis.org -->
+    <!-- eclipse 플러그인 : mybatis -->
+    <!--<bean id="sqlSessionFactory"
+          class="org.mybatis.spring.SqlSessionFactoryBean"
+          p:dataSource-ref="dbcpDataSource"
+          p:mapperLocations="classpath:mybatis3/*Mapper.xml"/>
+
+
+    &lt;!&ndash;  myBatis 설정 #2 &ndash;&gt;
+    <bean id="sqlSession"
+          class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg ref="sqlSessionFactory" index="0"/>
+    </bean>-->
+
+</beans>
