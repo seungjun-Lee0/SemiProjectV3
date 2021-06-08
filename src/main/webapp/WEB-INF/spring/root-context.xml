@@ -23,16 +23,16 @@
     <!-- 관련 라이브러리 : mybatis, mybatis-spring   -->
     <!-- blog.mybatis.org -->
     <!-- eclipse 플러그인 : mybatis -->
-    <!--<bean id="sqlSessionFactory"
+    <bean id="sqlSessionFactory"
           class="org.mybatis.spring.SqlSessionFactoryBean"
           p:dataSource-ref="dbcpDataSource"
           p:mapperLocations="classpath:mybatis3/*Mapper.xml"/>
 
 
-    &lt;!&ndash;  myBatis 설정 #2 &ndash;&gt;
+    <!-- myBatis 설정 #2 -->
     <bean id="sqlSession"
           class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg ref="sqlSessionFactory" index="0"/>
-    </bean>-->
+    </bean>
 
 </beans>

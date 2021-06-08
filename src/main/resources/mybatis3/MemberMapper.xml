@@ -3,19 +3,29 @@
 <mapper namespace="member">
 
     <insert id="insertMember" statementType="PREPARED"
-            parameterType="lsj.spring.vo.Member">
-        insert into member (userid, passwd, name, email)
-        values (#{userid},#{passwd},#{name},#{email})
+            parameterType="lsj.spring.mvc.vo.Member">
+        insert into joinMember
+            (name, userid, passwd, jumin, zipcode, addr1, addr2, email, phone)
+         values (#{name},#{userid},#{passwd},#{jumin},#{zipcode},#{addr1},#{addr2},#{email},#{phone})
     </insert>
 
-    <select id="loginMember" statementType="PREPARED"
-            parameterType="lsj.spring.vo.Member" resultType="int">
-        select COUNT(userid) cnt from member where userid =
-                                                   #{userid} and passwd = #{passwd}
+    <select id="selectZipcode" statementType="PREPARED"
+            parameterType="String"
+            resultType="lsj.spring.mvc.vo.Zipcode">
+        select * from zipcode where dong like #{dong}
     </select>
 
-    <select id="selectOneMember" statementType="PREPARED"
-            parameterType="String" resultType="lsj.spring.vo.Member">
-        select * from member where userid = #{mno}
+    <select id="checkUserid" statementType="PREPARED"
+            parameterType="String" resultType="int">
+        select count(userid) cnt from joinMember
+        where userid = #{userid}
     </select>
+
+    <select id="checkLogin" statementType="PREPARED"
+            parameterType="lsj.spring.mvc.vo.Member" resultType="int">
+        select count(userid) cnt from joinMember
+        where userid = #{userid} and passwd = #{passwd}
+
+    </select>
+
 </mapper>
