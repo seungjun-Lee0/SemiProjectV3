@@ -68,7 +68,7 @@ class="form-control border-danger col-2" readonly value="${param.jumin2}">
 <label class="col-2 col-form-label text-danger text-right" for="userid">아이디</label>
 <input type="text" name="userid" id="userid"
 class="form-control border-danger col-3">
-<span class="col-form-label">&nbsp;8~16자의 영문 소문자, 숫자와 특수기호(_)만 사용할 수 있습니다.</span>
+<span id="uidmsg" class="col-form-label">&nbsp;8~16자의 영문 소문자, 숫자와 특수기호(_)만 사용할 수 있습니다.</span>
 </div><!-- 아이디 -->
 
 <div class="form-group row">
@@ -82,7 +82,7 @@ class="form-control border-danger col-3">
 <label class="col-2 col-form-label text-danger text-right" for="repasswd">비밀번호 확인</label>
 <input type="password" name="repasswd" id="repasswd"
 class="form-control border-danger col-3">
-<span class="col-form-label">&nbsp;이전 항목에서 입력했던 비밀번호를 한번 더 입력하세요.</span>
+<span id="pwdmsg" class="col-form-label">&nbsp;이전 항목에서 입력했던 비밀번호를 한번 더 입력하세요.</span>
 </div><!-- 비번확인 -->
 
 <div class="form-group row">
@@ -204,30 +204,6 @@ id="findzipbtn">
 [검색하기] 버튼을 클릭하세요</p>
 <select class="col-8 offset-2 form-control"
 size="10" id="addrlist" name="addrlist">
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
-<option>123-456 서울 종로구 창신동</option>
 </select>
 </div>
 </form>
@@ -243,10 +219,4 @@ size="10" id="addrlist" name="addrlist">
 </div>
 
 </div>
-
-<footer>
-<h6 class="col bg-light text-right rounded">
-Copyright &copy; Lorem Ipsum 2020.
-All right Reserved. Created by Bootstrap4.</h6>
-</footer>
 </div>
