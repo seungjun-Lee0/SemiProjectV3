@@ -2,24 +2,25 @@ package lsj.spring.mvc.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lsj.spring.mvc.dao.MemberDAO;
-import lsj.spring.mvc.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import lsj.spring.mvc.dao.MemberDAO;
+import lsj.spring.mvc.vo.Member;
 
 import javax.servlet.http.HttpSession;
 
+
 @Service("msrv")
-public class MemberServiceImpl implements MemberSerivce{
+public class MemberServiceImpl implements MemberSerivce {
 
     @Autowired private MemberDAO mdao;
 
     @Override
     public String newMember(Member m) {
-        String result= "회원정보 저장 실패";
+        String result = "회원정보 저장 실패!";
 
         int cnt = mdao.insertMember(m);
-        if (cnt > 0) result = "회원정보 저장 완료";
+        if (cnt > 0) result = "회원정보 저장 성공!";
 
         return result;
     }
@@ -27,6 +28,7 @@ public class MemberServiceImpl implements MemberSerivce{
     @Override
     public String findZipcode(String dong) {
         // 조회결과 출력방법 1 : csv (쉼표로 구분)
+        // sido, gugun, dong, bunji
         // 서울, 강남구, 논현동, 123번지
 
         // 조회결과 출력방법 2 : xml
@@ -35,7 +37,11 @@ public class MemberServiceImpl implements MemberSerivce{
 
         // 조회결과 출력방법 3 : json (추천)
         // {'sido':'서울', 'gugun':'강남구',
-        //  'dong':'논현동', 'bunji':'123번지'}
+        //  'dong':'논현동', 'bunji':'123번지'},
+        // {'sido':'서울', 'gugun':'강남구',
+        //  'dong':'논현동', 'bunji':'123번지'},
+        // {'sido':'서울', 'gugun':'강남구',
+        //  'dong':'논현동', 'bunji':'123번지'},
 
         // StringBuilder sb = new StringBuilder();
         // sb.append("{'sido':").append("'서울',")
@@ -43,11 +49,11 @@ public class MemberServiceImpl implements MemberSerivce{
         // .append("'dong':").append("'논현동',")
         // .append("'bunji':").append("'123번지',");
         // .append("}");
-        
-        // 코드를 json 형태로 결과물을 만들려면 상당히 복잡함
-        // ObjectMapper 라는 라이브러리를 이용하여
-        // 손쉽게 JSON 형식의 데이터를 생성 할 수 있음
-        // writeValueAsString : List 형식의 데이터를 JSON 형식으로 변환해 줌
+
+        // 코드를 json형태로 결과물을 만들려면 상당히 복잡함
+        // ObjectMapper라는 라이브러리를 이용하면
+        // 손쉽게 JSON형식의 데이터를 생성할 수 있음
+        // writeValueAsString : List형식의 데이터를 JSON형식으로 변환해 줌
         ObjectMapper mapper = new ObjectMapper();
         String json = "";
 
@@ -56,7 +62,7 @@ public class MemberServiceImpl implements MemberSerivce{
         try {
             json = mapper.writeValueAsString(
                     mdao.selectZipcode(dong)
-            );
+            ); //
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -66,11 +72,21 @@ public class MemberServiceImpl implements MemberSerivce{
 
     @Override
     public String checkUserid(String uid) {
-        return mdao.selectOneUserid(uid) + "";
+        return mdao.selectOneUserid(uid)+"";
     }
 
     @Override
     public boolean checkLogin(Member m, HttpSession sess) {
-        return false;
+        boolean isLogin = false;
+
+        // 로그인 성공시 회원정보를 세션에 저장
+        // 입력한 아이디/비밀번호가 member 테이블에 있는지 확인
+        // 있으면 : 1을 반환, 없으면 : 0을 반환
+        if (mdao.selectLogin(m) > 0) {
+            sess.setAttribute("UID", m.getUserid());
+            isLogin = true;
+        }
+
+        return isLogin;
     }
 }

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+    <select id="selectBoard" statementType="PREPARED"
+            parameterType="int"
+            resultType="lsj.spring.mvc.vo.Board">
+        select bdno, title, userid, regdate, views, thumbup from board
+        order by bdno desc limit #{snum}, 30
+    </select>
+
+    <select id="countBoard" statementType="PREPARED"
+            resultType="int">
+        select count(bdno) from board
+    </select>
+
+    <insert id="insertBoard" statementType="PREPARED"
+            parameterType="lsj.spring.mvc.vo.Board">
+        insert into board (title, userid, contents) values
+        (#{title},#{userid},#{contents})
+    </insert>
+
+    <select id="selectOneBoard" statementType="PREPARED"
+            parameterType="String"
+            resultType="lsj.spring.mvc.vo.Board">
+        select * from board where bdno = #{bdno}
+    </select>
+
+    <update id="viewIncrement" statementType="PREPARED"
+            parameterType="String">
+        update board set views = views + 1
+        where bdno = ${bdno}
+    </update>
+
+    <!-- 동적 질의문으로 검색 기능 구현 -->
+    <!-- 단, 컬럼명이나 테이블명에는 #{}가 아닌 ${}를 사용 -->
+    <select id="findSelect" statementType="PREPARED"
+            parameterType="map"
+            resultType="lsj.spring.mvc.vo.Board">
+        select bdno, title, userid, regdate, views, thumbup from board
+        <if test="ftype != 'titcont'">
+        where ${ftype} like concat(#{fkey}, '%')</if>
+        <if test="ftype == 'titcont'">
+        where title like concat(#{ftype}, '%')
+                    or contents like concat(#{fkey}, '%')</if>
+        order by bdno desc limit #{snum}, 30
+    </select>
+
+    <select id="findSelectCount" statementType="PREPARED"
+            parameterType="map"
+            resultType="int">
+        select COUNT(bdno) from board
+        <if test="ftype != 'titcont'">
+            where ${ftype} like concat(#{fkey}, '%')</if>
+        <if test="ftype == 'titcont'">
+            where title like concat(#{fkey}, '%')
+            or contents like concat(#{fkey}, '%')</if>
+    </select>
+
+</mapper>

@@ -129,13 +129,16 @@ class="form-control col-3 border-warning">
 <input type="password" id="jumin2" name="jumin2"
 class="form-control col-3 border-warning">
 </div>
-
-<div class="form-group row">
-<div class="col-4"></div>
-<input type="checkbox" id="jumincheck" name="jumincheck" class="custom-control-input">
-<label for="jumincheck" class="custom-control-label text-warning">
-주민등록번호 처리에 동의합니다.</label>
-</div>
+    <div class="form-group row">
+        <label class="col-4"></label>
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" id="jumincheck" name="jumincheck"
+                   class="custom-control-input" value="y">
+            <label for="jumincheck"
+                   class="custom-control-label text-warning">
+                주민등록번호 처리에 동의합니다</label>
+        </div>
+    </div>
 </div>
 <div class="col-5">
 <ul style="color:blue; font-weight: bold">
