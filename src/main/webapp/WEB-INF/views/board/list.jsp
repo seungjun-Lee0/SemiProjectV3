@@ -33,8 +33,14 @@
 <%-- 글번호 --%>
 <fmt:parseNumber var="snum" value="${bdcnt - (cp - 1) * 30}" />
 
-<%-- 페이지링크 --%>
+<%-- 페이지링크 : 검색 기능 x --%>
 <c:set var="pglink" value="/board/list?cp="/>
+
+<%-- 페이지링크 : 검색 기능 o --%>
+<c:if test="${not empty param.fkey}">
+    <c:set var="pglink"
+           value="/board/find?ftype=${param.ftype}&fkey=${param.fkey}&cp=" />
+</c:if>
 
         <div class="main">
 
@@ -54,7 +60,9 @@
                                 <option value="contents">내용</option>
                             </select>
                             &nbsp;
-                            <input type="text" name="findkey" id="findkey" class="form-control col-4 border-primary">
+                            <input type="text" name="findkey" id="findkey"
+                                   class="form-control col-4 border-primary"
+                                   value="${param.fkey}">
                             &nbsp;
                             <button class="btn btn-primary" type="button" id="findbtn" name="findbtn">검색</button>
 
@@ -143,5 +151,4 @@
                     </ul>
                 </div>
             </div>
-
         </div>

@@ -2,6 +2,18 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<%--
+    게시판 댓글 처리 : reply
+    댓글번호 댓글내용     작성자     작성일      부모글번호 부모댓글번호
+    1      하이       abc123   20210611   100        1
+    2      안녕       abc123   20210611   100        2
+    3      안녕       abc123   20210611   100        3
+    4      왜영어로..  abc123   20210611   100        1
+
+    댓글 출력 순서는 부모글 번호로 추려낸 후 부모댓글번호로 정렬
+--%>
+
+
 <%-- 줄바꿈 기호를 변수로 설정 : br 태그 변환 필요 --%>
 <c:set var="newChar" value="
 " scope="application"/>
@@ -60,34 +72,35 @@
             <h3><i class="bi bi-chat">나도 한마디</i></h3>
         </div>
 
+        <!-- 댓글 -->
         <table class="col-10 offset-1">
-            <tr>
-                <td><h4>zzyzzy</h4></td>
-                <td><div class="cmtbg1">2021.05.21 10:10:10</div>
-                    <p>오늘 날씨가 정말 좋네요 ㅋㅋ</p>
-                </td>
+            <c:forEach var="r" items="${rps}">
+                <c:if test="${r.rno eq r.rpno}">
+                    <tr>
+                        <td><h4>${r.userid}</h4></td>
+                        <td><div class="cmtbg1">${r.regdate}
+                            <span style="float:right">
+                                <c:if test="${not empty UID}">
+                                <a href="javascript:addReply('${r.rno}')">[추가]</a>
+                                </c:if>
+                                <c:if test="${UID eq r.userid}">
+                                [수정] [삭제]
+                                </c:if></span></div>
+                            <p>${r.reply}</p>
+                        </td>
+                    </tr>
+                </c:if>
+                <c:if test="${r.rno ne r.rpno}">
+                    <tr>
+                        <td></td>
+                        <td><div class="cmtbg2">${r.userid}
+                            <span style="float: right">${r.regdate}</span></div>
+                            <p>${r.reply}</p>
+                        </td>
+                    </tr>
+                </c:if>
+            </c:forEach>
 
-            </tr>
-            <tr>
-                <td></td>
-                <td><div class="cmtbg2">2021.05.21 10:10:10</div>
-                    <p>오늘 날씨가 정말 좋네요 ㅋㅋ</p>
-                </td>
-            </tr>
-
-            <tr>
-                <td><h4>zzyzzy</h4></td>
-                <td><div class="cmtbg1">2021.05.21 10:10:10</div>
-                    <p>오늘 날씨가 정말 좋네요 ㅋㅋ</p>
-                </td>
-            </tr>
-
-            <tr>
-                <td><h4>zzyzzy</h4></td>
-                <td><div class="cmtbg1">2021.05.21 10:10:10</div>
-                    <p>오늘 날씨가 정말 좋네요 ㅋㅋ</p>
-                </td>
-            </tr>
         </table>
     </div>
 
@@ -96,13 +109,38 @@
         <form name="replyfrm" id="replyfrm"
               class="card card-body bg-light col-10 offset-1">
             <div class="form-group row justify-content-center">
-                <label class="form-col-label col-2 pushdwn text-center" for="reply">작성자</label>
+                <label class="form-col-label col-2 pushdwn text-center" for="reply">${UID}</label>
                 <textarea class="form-control col-7 border-danger" name="reply" id="reply" rows="5"></textarea>
                 &nbsp;
-                <button type="button" class="btn btn-dark form-control pushdwn col-2">댓글쓰기</button>
+                <button type="button" id="newbrbtn" class="btn btn-dark form-control pushdwn col-2">댓글쓰기</button>
             </div>
+            <input type="hidden" name="userid" value="${UID}" />
+            <input type="hidden" name="bdno" value="${param.bdno}" />
         </form>
 
     </div>
 
+</div>
+
+<!-- 대댓글 작성을 위한 모달대회상자 -->
+<div class="modal hide" id="replyModal" role="dialog">
+    <div class="modal-dialog": role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">대댓글 쓰기</h3>
+            </div>
+            <div class="modal-body">
+                <form name="rpfrm" id="rpfrm" class="well form-inline">
+                    <textarea name="reply" id="rereply" rows="8" cols="75"></textarea>
+                    <input type="hidden" name="userid" value="${UID}">
+                    <input type="hidden" name="bdno" value="${param.bdno}">
+                    <input type="hidden" name="rpno" id="rpno">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="newrrpbtn"
+                        class="btn btn-warning">대댓글 작성</button>
+            </div>
+        </div>
+    </div>
 </div>
