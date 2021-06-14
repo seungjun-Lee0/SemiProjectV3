@@ -1,4 +1,7 @@
 <%@ page pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
         <div class="main">
 
             <div>
@@ -26,7 +29,7 @@
 
 
                     <div class="col-2 text-right">
-                            <button type="button" class="btn btn-primary" id="newbdbtn">새글쓰기</button>
+                            <button type="button" class="btn btn-primary" id="newpdsbtn">새글쓰기</button>
 
                     </div>
             </div>
@@ -57,104 +60,19 @@
                                 <th>531</th>
                             </tr>
 
-                            <tr>
-                                <th>1</th>
-                                <th><a href="view.html">오늘 날씨</a></th>
-                                <th>zzyzzy</th>
-                                <th>2021.05.21</th>
-                                <th>15</th>
-                                <th>531</th>
-                            </tr>
+                            <c:forEach var="p" items="${pds}">
 
                             <tr>
-                                <th>1</th>
-                                <th>오늘 날씨</th>
-                                <th>zzyzzy</th>
-                                <th>2021.05.21</th>
-                                <th>15</th>
-                                <th>531</th>
+                                <th>${p.pno}</th>
+                                <th><a href="/pds/view?pno=${p.pno}">${p.title}</a></th>
+                                <th>${p.userid}</th>
+                                <th>${fn:substring(p.regdate,0,10)}</th>
+                                <th>${p.thumbup}</th>
+                                <th>${p.views}</th>
                             </tr>
 
-                            <tr>
-                                <th>1</th>
-                                <th>오늘 날씨</th>
-                                <th>zzyzzy</th>
-                                <th>2021.05.21</th>
-                                <th>15</th>
-                                <th>531</th>
-                            </tr>
+                            </c:forEach>
 
-                            <tr>
-                                <th>1</th>
-                                <th>오늘 날씨</th>
-                                <th>zzyzzy</th>
-                                <th>2021.05.21</th>
-                                <th>15</th>
-                                <th>531</th>
-                            </tr>
-
-                            <tr>
-                                <th>1</th>
-                                <th>오늘 날씨</th>
-                                <th>zzyzzy</th>
-                                <th>2021.05.21</th>
-                                <th>15</th>
-                                <th>531</th>
-                            </tr>
-
-                            <tr>
-                                <th>1</th>
-                                <th>오늘 날씨</th>
-                                <th>zzyzzy</th>
-                                <th>2021.05.21</th>
-                                <th>15</th>
-                                <th>531</th>
-                            </tr>
-
-                            <tr>
-                                <th>1</th>
-                                <th>오늘 날씨</th>
-                                <th>zzyzzy</th>
-                                <th>2021.05.21</th>
-                                <th>15</th>
-                                <th>531</th>
-                            </tr>
-
-                            <tr>
-                                <th>1</th>
-                                <th>오늘 날씨</th>
-                                <th>zzyzzy</th>
-                                <th>2021.05.21</th>
-                                <th>15</th>
-                                <th>531</th>
-                            </tr>
-
-                            <tr>
-                                <th>1</th>
-                                <th>오늘 날씨</th>
-                                <th>zzyzzy</th>
-                                <th>2021.05.21</th>
-                                <th>15</th>
-                                <th>531</th>
-                            </tr>
-
-                            <tr>
-                                <th>1</th>
-                                <th>오늘 날씨</th>
-                                <th>zzyzzy</th>
-                                <th>2021.05.21</th>
-                                <th>15</th>
-                                <th>531</th>
-                            </tr>
-
-                            <tr>
-                                <th>1</th>
-                                <th>오늘 날씨</th>
-                                <th>zzyzzy</th>
-                                <th>2021.05.21</th>
-                                <th>15</th>
-                                <th>531</th>
-                            </tr>
                         </tbody>
 
 
