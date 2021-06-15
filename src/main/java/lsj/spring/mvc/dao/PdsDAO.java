@@ -12,8 +12,13 @@ public interface PdsDAO {
     int selectCountPds();
 
     Pds selectOnepds(String pno);
-    Pds selectOneFname(String pno, String order);
+    Pds selectOneFname(Map<String, String> param);
 
     int downCountPds(Map<String, String> param);
+    int thumbupCountPds(String pno);
 
+    String selectPrevpno(String pno);
+    String selectNextpno(String pno);
+
+    void deletePds(String pno);
 }

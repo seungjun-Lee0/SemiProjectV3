@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository("psrv")
 public class PdsServiceImpl implements PdsService{
@@ -83,11 +85,48 @@ public class PdsServiceImpl implements PdsService{
 
     @Override
     public Pds readOneFname(String pno, String order) {
-        return null;
+        Map<String, String> param = new HashMap<>();
+        param.put("order", "fname" + order);
+        param.put("pno", pno);
+        return pdao.selectOneFname(param);
     }
 
     @Override
     public boolean downCountPds(String pno, String order) {
-        return false;
+        Map<String, String> param = new HashMap<>();
+        param.put("down", "fdown" + order);
+        param.put("pno", pno);
+
+        boolean isCounted = false;
+        if(pdao.downCountPds(param) > 0){
+            isCounted = true;
+        }
+        return isCounted;
+    }
+
+    @Override
+    public boolean thumbupCountPds(String pno) {
+        boolean isCounted = false;
+        if(pdao.thumbupCountPds(pno) > 0){
+            isCounted = true;
+        }
+        return isCounted;
+    }
+
+    @Override
+    public String readPrvpno(String pno) {
+        return pdao.selectPrevpno(pno);
+    }
+
+    @Override
+    public String readNextpno(String pno) {
+        return pdao.selectNextpno(pno);
+    }
+
+    @Override
+    public Pds removePds(String pno) {
+        Pds p = pdao.selectOnepds(pno); // 삭제하기전 파일정보 불러오기
+        pdao.deletePds(pno);            // 게시글 삭제
+        return p;
     }
 }

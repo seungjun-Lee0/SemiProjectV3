@@ -15,6 +15,11 @@ public interface PdsService {
     Pds readOneFname(String pno, String order);
 
     boolean downCountPds(String pno, String order);
+    boolean thumbupCountPds(String pno);
 
+    String readPrvpno(String pno);
+    String readNextpno(String pno);
+
+    Pds removePds(String pno);
 
 }

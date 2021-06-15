@@ -4,15 +4,13 @@
 
     <insert id="insertPds" statementType="PREPARED"
             parameterType="lsj.spring.mvc.vo.Pds">
-        insert into pds(title, userid,
-                        views, thumbup, contents,
+        insert into pds(title, userid,contents,
                         fname1, fname2, fname3,
                         fsize1, fsize2, fsize3,
                         ftype1, ftype2, ftype3, uuid)
-                    values (#{title}, #{userid}, #{views}, #{thumbup},
-                            #{contents},#{fname1}, #{fname2}, #{fname3},
-                            #{fsize1}, #{fsize2}, #{fsize3},#{ftype1},
-                            #{ftype2}, #{ftype3}, #{uuid})
+                    values (#{title},#{userid},#{contents},#{fname1},
+                            #{fname2}, #{fname3},#{fsize1},#{fsize2},
+                            #{fsize3},#{ftype1},#{ftype2}, #{ftype3}, #{uuid})
     </insert>
 
     <select id="selectPds" statementType="PREPARED"
@@ -32,4 +30,42 @@
             resultType="lsj.spring.mvc.vo.Pds">
         select * from pds where pno = #{pno};
     </select>
+    
+    <select id="selectFname" statementType="PREPARED"
+            parameterType="Map"
+            resultType="lsj.spring.mvc.vo.Pds">
+        select ${order} fname1, uuid from pds where pno = #{pno}
+    </select>
+
+    <update id="updateDown" statementType="PREPARED"
+            parameterType="Map">
+        update pds set ${down} = ${down} + 1 where pno = #{pno}
+    </update>
+
+    <update id="updateThumbup" statementType="PREPARED"
+            parameterType="String">
+        update pds set thumbup = thumbup + 1 where pno = #{pno}
+    </update>
+
+    <select id="selectPrev" statementType="PREPARED"
+            parameterType="String"
+            resultType="String">
+        select prev from (
+            select pno, lead(pno) over (order by pno desc) prev
+            from pds) newone where pno = #{pno};
+    </select>
+
+    <select id="selectNext" statementType="PREPARED"
+            parameterType="String"
+            resultType="String">
+        select next from (
+            select pno, lag(pno) over (order by pno desc) next
+            from pds) newone where pno = #{pno};
+    </select>
+
+    <delete id="deletePds" statementType="PREPARED"
+            parameterType="String">
+        delete from pds where pno = #{pno}
+    </delete>
+
 </mapper>
