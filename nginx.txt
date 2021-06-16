@@ -1,0 +1,36 @@
+nginx 서버 설정하기
+
+오픈소스 Http 서버 (웹서버)
+웹서버 : 클라이언트의 요청을 받아 서비스하는 특수한 프로그램
+클라이언트 요청 (html, css, js, 이미지등의 웹자원을 요구함)
+
+하지만, 웹서버가 응답할 수 없는 클라이언트의 요청을 처리하려면
+WAS 서버가 필요함
+
+웹서버가 응답할 수 없는 클라이언트의 요청
+=> (디비에서 정보를 가져옴, 서버 시간의 시간 요청, 비지니스 로직 처리)
+
+
+대표적인 웹서버 : apache Http 서버, nginx 서버 (추천!)
+대표적인 WAS서버 : tomcat, jetty (java), IIS (C#), django (python)
+
+웹서버 전용 port : 80 (유명한 포트번호라서 생략 가능)
+WAS 서버 전용 port : tomcat 8080
+
+
+nginx.org
+=> nginx/Windows-1.19.6 (2021.02.04기준)
+=> c:/Java에 압축해제 해둠
+
+nginx 시작 : nginx.exe
+브라우져 실행후 주소창에 localhost 또는 127.0.0.1 입력
+
+테스트용 이미지 저장
+/opt/homebrew/var/www (m1)
+/usr/local/var/www (intel)
+
+업로드해둔 그림파일 확인
+=> 주소창에 'localhost/cdn/그림파일명' 입력
+
+따라서, 이미지 업로드시 nginx 루트 디렉토리에 저장해 두어야
+웹에서 이미지를 쉽게 볼수 있음

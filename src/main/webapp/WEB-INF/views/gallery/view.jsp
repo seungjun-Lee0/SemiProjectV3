@@ -1,4 +1,10 @@
 <%@ page pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<c:set var="baseURL" value="http://localhost/cdn/" />
+<c:set var="fnames" value="${fn:split(gal.fnames,'/')}"/>
+<c:set var="fsizes" value="${fn:split(gal.fsizes,'/')}" />
 
         <div id="main">
            <div>
@@ -23,25 +29,29 @@
                 <div class="row">
                     <table class="table col-10 offset-1">
                         <tr class="tbbg1 text-center"><th colspan="2">
-                            <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+                            <h2>${gal.title}</h2>
                             </th></tr>
                         <tr class="tbbg2">
-                            <td style="width: 50%">zzyzzy</td>
-                            <td class="text-right">2021.05.21 11:11:11 / 22 / 33</td></tr>
+                            <td style="width: 50%">${gal.userid}</td>
+                            <td class="text-right">${gal.regdate} / ${gal.views} / ${gal.thumbup}</td></tr>
                         <tr class="tbbg3"><td colspan="2">
-                            <div><img src="/img/curly.png" class="img-fluid"></div>
-                            <div><img src="/img/Isabelle.png" class="img-fluid"></div>
-                            <div><img src="/img/20130125181216_6417.jpg" class="img-fluid"></div>
+
+                                <c:forEach var="f" items="${fnames}">
+                                    <c:set var="pos" value="${fn:indexOf(f,'.')}" />
+                                    <c:set var="fname" value="${fn:substring(f, 0, pos)}" />
+                                    <c:set var="fext" value="${fn:substring(f, pos+1, fn:length(f))}" />
+                                    <div>
+                                        <img src="${baseURL}${fname}${gal.uuid}.${fext}" class="img-fluid">
+                                    </div>
+                                </c:forEach>
+
                         </td></tr><!-- 본문 -->
+
+                        <c:forEach begin="0" end="${fn:length(fnames) - 1}" var="i">
                         <tr><td colspan="2" class="tbbg4">
                             <i class="fas fa-file-image"></i>
-                            homework.jpg (123KB)</td></tr>
-                        <tr><td colspan="2" class="tbbg4">
-                            <i class="fas fa-file-image"></i>
-                            homework.gif (456KB)</td></tr>
-                        <tr><td colspan="2" class="tbbg4">
-                            <i class="fas fa-file-image"></i>
-                            homework.png (789KB)</td></tr>
+                            ${fnames[i]} (${fsizes[i]}KB)</td></tr>
+                        </c:forEach>
                     </table>
                 </div>    
                
