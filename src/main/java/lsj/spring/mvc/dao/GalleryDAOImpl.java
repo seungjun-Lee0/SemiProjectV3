@@ -28,4 +28,19 @@ public class GalleryDAOImpl implements GalleryDAO{
     public Gallery selectOneGal(String gno) {
         return sqlSession.selectOne("gallery.selectOneGallery", gno);
     }
+
+    @Override
+    public int updateGal(Gallery g) {
+        return sqlSession.update("gallery.updateGallery",g);
+    }
+
+    @Override
+    public String readFnames(String gno) {
+        return sqlSession.selectOne("gallery.readFname", gno);
+    }
+
+    @Override
+    public String readFsizes(String gno) {
+        return sqlSession.selectOne("gallery.readFsize", gno);
+    }
 }

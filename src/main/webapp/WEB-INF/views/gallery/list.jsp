@@ -32,17 +32,21 @@
                         <i class="fas fa-plus-circle"></i> 새글쓰기</button>
                 </div>
             </div><!-- 검색, 버튼 -->
-            
+
             <div class="row">
                 <div class="col-12">
                     <ul class="list-inline moveright">
 
                         <c:forEach var="g" items="${gals}">
+                            <c:set var="f" value="${fn:split(g.fnames, '/')[0]}" />
+                            <c:set var="pos" value="${fn:indexOf(f,'.')}" />
+                            <c:set var="fname" value="${fn:substring(f, 0, pos)}" />
+                            <c:set var="fext" value="${fn:substring(f, pos+1, fn:length(f))}" />
                         <li class="list-inline-item pushdown">
                             <div class="card cdwide">
                                 <img class="imgsize card-img-top"
                                      onclick="showimg('${g.gno}');"
-                                     src="${thumbURL}small_${g.gno}${fn:split(g.fnames,"[/]")[0]}">
+                                     src="${thumbURL}small_${g.gno}_${fname}${g.uuid}.${fext}">
                                 <div class="card-body">
                                     <h5 class="card-title">${g.title}</h5>
                                     <p class="card-text">${g.userid}

@@ -10,4 +10,6 @@ public interface GalleryService {
     boolean newGal(Gallery g, MultipartFile[] file);
     List<Gallery> readGal(String cp);
     Gallery readOneGal(String gno);
+
+    void modifyGal(Gallery g, MultipartFile[] img);
 }

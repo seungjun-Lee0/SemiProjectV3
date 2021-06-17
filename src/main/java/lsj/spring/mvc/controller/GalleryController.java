@@ -41,4 +41,20 @@ public class GalleryController {
 			gsrv.newGal(g, img);
 			return "redirect:/gallery/list";
 		}
+
+		@GetMapping("/gallery/update")
+		public ModelAndView update(ModelAndView mv, String gno) {
+			mv.setViewName("gallery/update.tiles");
+			mv.addObject("g", gsrv.readOneGal(gno));
+			return mv;
+		}
+
+		@PostMapping("/gallery/update")
+		public String updateok(Gallery g, MultipartFile[] img, String todie) {
+
+
+			gsrv.modifyGal(g, img);
+
+			return "redirect:/gallery/list";
+		}
 }
